@@ -31,7 +31,7 @@ function saveCurrLoc(loc) {
                 id: utilsService.makeId(),
                 name: res,
                 lat: loc.lat(),
-                lng: loc.lng,
+                lng: loc.lng(),
                 createdAt: Date.now()
             }
             locs.push(newLoc)

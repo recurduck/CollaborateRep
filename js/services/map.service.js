@@ -5,7 +5,8 @@ export const mapService = {
     addMarker,
     panTo,
     map: gMap,
-    getMarkers
+    getMarkers,
+    getGeocode
 }
 
 
@@ -59,8 +60,23 @@ function getMarkers(){
     return Promise.resolve(gMarkers)
 }
 
-
-
+function getGeocode(ev){
+    const address = ev.target.value
+    if(address){
+        const GEO_KEY = 'AIzaSyARh9KjQvI2E01yjvxzeozkaiNT3QflJFs'
+        const prm = axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${GEO_KEY}`)
+        .then(res => {
+            console.log('res.data.geometry.location', res.data.results)
+            if(res.data.results){
+                const pos = res.data.results[0].geometry.location
+                console.log('pos', pos)
+                addMarker(pos)
+            }
+                // const pos = res.data.geometry.location
+                // addMarker(pos)
+            })
+    }
+}
 
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
