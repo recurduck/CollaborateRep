@@ -1,5 +1,7 @@
+
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
+import { utilsService } from './services/utils.service.js';
 
 window.onload = onInit;
 
@@ -74,8 +76,10 @@ function addEventListenrs() {
                     'error'
                 )
             })
-
     })
+    document.querySelector('.search-input').addEventListener('input', 
+        utilsService.debounce(mapService.getGeocode, 1000) 
+    )
 }
 
 function addEventListenrsTable() {
