@@ -5,8 +5,8 @@ export const locService = {
 
 let nextId = 3
 const locs = [
-    {id:1, name: 'Loc1', lat: 32.047104, lng: 34.832384, createdAt: Date.now()}, 
-    {id:2, name: 'Loc2', lat: 32.047201, lng: 34.832581, createdAt: Date.now()}
+    { id: 1, name: 'Loc1', lat: 32.047104, lng: 34.832384, createdAt: Date.now() },
+    { id: 2, name: 'Loc2', lat: 32.047201, lng: 34.832581, createdAt: Date.now() }
 ]
 
 function getLocs() {
@@ -17,7 +17,7 @@ function getLocs() {
     });
 }
 
-function  saveCurrLoc(loc) {
+function saveCurrLoc(loc) {
     getNewLocName()
         .then(res => {
             const newLoc = {
@@ -29,12 +29,19 @@ function  saveCurrLoc(loc) {
             }
             locs.push(newLoc)
         })
+        .catch(err => {
+            Swal.fire(
+                'We are sorry,',
+                err,
+                'error'
+            )
+        });
 }
 
 function getNewLocName() {
     const prm = new Promise((res, rej) => {
         const newName = prompt('How would you like to call this place?')
-        if(newName) return res(newName)
+        if (newName) return res(newName)
         return rej('user aborted')
     })
     return prm
