@@ -5,8 +5,8 @@ export const locService = {
 
 let nextId = 3
 const locs = [
-    {id:1, name: 'Loc1', lat: 32.047104, lng: 34.832384 }, 
-    {id:2, name: 'Loc2', lat: 32.047201, lng: 34.832581 }
+    {id:1, name: 'Loc1', lat: 32.047104, lng: 34.832384, createdAt: Date.now()}, 
+    {id:2, name: 'Loc2', lat: 32.047201, lng: 34.832581, createdAt: Date.now()}
 ]
 
 function getLocs() {
@@ -24,7 +24,8 @@ function  saveCurrLoc(loc) {
                 id: nextId++,
                 name: res,
                 lat: loc.lat(),
-                lng: loc.lng
+                lng: loc.lng,
+                createdAt: Date.now()
             }
             locs.push(newLoc)
         })
