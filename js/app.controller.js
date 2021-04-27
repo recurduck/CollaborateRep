@@ -79,12 +79,21 @@ function addEventListenrs() {
         const inputVal = elForm.querySelector('input').value
         mapService.getGeocode(inputVal)
         .then(res => {
-            // console.log('res', res)
             return mapService.getWeather(res.lat, res.lng)
         })
         .then(res => {
             renderWeather(res);
         })
+    })
+    document.querySelector('.btn-copy-url').addEventListener('click', (ev) => {
+        mapService.copyUrl()
+            .then(() => {
+                Swal.fire(
+                    'Success!',
+                    'Link copied to clipboard',
+                    'success'
+                  )
+            })
     })
 }
 
@@ -97,11 +106,23 @@ function addEventListenrsTable() {
     document.querySelector('.table .btn-go').addEventListener('click', (ev) => {
         locService.goLoc(ev.target.dataset.id)
             .then(res => {
-                mapService.addMarker(res)
+                return mapService.addMarker(res)
+            })
+            .then((res) =>{
+                const loc = {
+                    lat: res.position.lat(),
+                    lng: res.position.lng()
+                }
+                return mapService.getWeather(loc.lat, loc.lng)
+            })
+            .then(res => {
+                renderWeather(res)
             })
             .catch((err) => Swal.fire('Connot Delete Location'))
     })
 }
+
+
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
     console.log('Getting Pos');

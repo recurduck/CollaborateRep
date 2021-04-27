@@ -7,7 +7,8 @@ export const mapService = {
     map: gMap,
     getMarkers,
     getGeocode,
-    getWeather
+    getWeather,
+    copyUrl
 }
 
 let gMarkers = []
@@ -36,18 +37,22 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 addMarker(loc)
             })
         })
-}
-
-function addMarker(loc) {
-    if (currPos) currPos.setMap(null)
-    var marker = new google.maps.Marker({
-        position: loc,
-        map: gMap,
-    });
-    currPos = marker
-    panTo(loc.lat, loc.lng)
+    }
+    
+    function addMarker(loc) {
+        if (currPos) currPos.setMap(null)
+        var marker = new google.maps.Marker({
+            position: loc,
+            map: gMap,
+        });
+        currPos = {
+            lat:marker.position.lat(),
+            lng:marker.position.lng()
+        }
+        panTo(loc.lat, loc.lng)
     return Promise.resolve(marker)
 }
+
 
 function panTo(lat, lng) {
     var latLng = new google.maps.LatLng(lat, lng);
@@ -63,9 +68,12 @@ function getWeather(lat, lon) {
     // const prm = axios.get(`api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`)
     const prm = axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=matric`)
         .then(res => {
+            //res.data.weather //gives you an array with all sort of stuff
             return _convertToCelsius(res.data.main)
         })
-        .then(res => {return res})
+        .then(res => {
+            return res
+        })
     return prm
 }
 
@@ -82,6 +90,22 @@ function getGeocode(address) {
             })
         return prm
     }
+}
+
+function copyUrl(){
+    let linkToCopy = document.URL
+    linkToCopy += `?lan=${currPos.lat}&lng=${currPos.lng}`
+    console.log('linkToCopy', linkToCopy)
+    const el = document.createElement('textarea');
+    el.value = linkToCopy;
+    el.setAttribute('readonly', linkToCopy);
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    return Promise.resolve()
 }
 
 function _convertToCelsius(kelvin) {
@@ -108,3 +132,4 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
+
