@@ -44,9 +44,10 @@ function addEventListenrs() {
     document.querySelector('.btn-user-pos').addEventListener('click', (ev) => {
         getPosition()
             .then(pos => {
-                console.log('User position is:', pos.coords);
-                document.querySelector('.user-pos').innerText =
-                    `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+                mapService.addMarker(pos)
+                // console.log('User position is:', pos.coords);
+                // document.querySelector('.user-pos').innerText =
+                //     `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
             })
             .catch(err => {
                 console.log('err!!!', err);
@@ -55,9 +56,15 @@ function addEventListenrs() {
     document.querySelector('.btn-add-marker').addEventListener('click', () => {
         mapService.getMarkers()
             .then(res => {
-                locService.saveCurrLoc(res[res.length-1])
+                locService.saveCurrLoc(res[res.length - 1])
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                Swal.fire(
+                    'We are sorry,',
+                    err,
+                    'error'
+                )
+            })
     })
 }
 

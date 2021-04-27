@@ -1,13 +1,19 @@
+import {storageService} from './localStorage.js'
+import { utilsService } from './utils.service.js'
+
 export const locService = {
     getLocs,
     saveCurrLoc
 }
 
+const STORAGE_KEY = 'locsDB'
+
 let nextId = 3
-const locs = [
-    { id: 1, name: 'Loc1', lat: 32.047104, lng: 34.832384, createdAt: Date.now() },
-    { id: 2, name: 'Loc2', lat: 32.047201, lng: 34.832581, createdAt: Date.now() }
-]
+const locs = storageService.loadFromStorage(STORAGE_KEY) || []
+// const locs = [
+//     { id: 1, name: 'Loc1', lat: 32.047104, lng: 34.832384, createdAt: Date.now() },
+//     { id: 2, name: 'Loc2', lat: 32.047201, lng: 34.832581, createdAt: Date.now() }
+// ]
 
 function getLocs() {
     return new Promise((resolve, reject) => {
@@ -20,14 +26,16 @@ function getLocs() {
 function saveCurrLoc(loc) {
     getNewLocName()
         .then(res => {
+            console.log('res', res)
             const newLoc = {
-                id: nextId++,
+                id: utilsService.makeId(),
                 name: res,
                 lat: loc.lat(),
                 lng: loc.lng,
                 createdAt: Date.now()
             }
             locs.push(newLoc)
+            storageService.saveToStorage(STORAGE_KEY, locs)
         })
         .catch(err => {
             Swal.fire(
@@ -48,4 +56,4 @@ function getNewLocName() {
 }
 
 
-
+window.locs = locs
