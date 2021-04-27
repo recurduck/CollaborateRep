@@ -81,7 +81,14 @@ function addEventListenrs() {
 function addEventListenrsTable() {
     document.querySelector('.table .btn-del').addEventListener('click', (ev) => {
         locService.deleteLoc(ev.target.dataset.id)
-            .then(() => renderTableContent())
+            .then(res => renderTableContent(res))
+            .catch((err) => Swal.fire('Connot Delete Location'))
+    })
+    document.querySelector('.table .btn-go').addEventListener('click', (ev) => {
+        locService.goLoc(ev.target.dataset.id)
+            .then(res => {
+                mapService.addMarker(res)
+            })
             .catch((err) => Swal.fire('Connot Delete Location'))
     })
 }

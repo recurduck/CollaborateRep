@@ -12,6 +12,7 @@ table .btn-del {
 }
 table button img {
     width: 30px;
+    pointer-events: none;
 }
 
 
