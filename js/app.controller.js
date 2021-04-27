@@ -65,11 +65,12 @@ function addEventListenrs() {
                 )
             })
     })
-    document.querySelector('.search-input').addEventListener('input', 
-        utilsService.debounce(mapService.getGeocode, 1000) 
-    )
-    
-
+    document.querySelector('.search-form').addEventListener('submit', ev => {
+        ev.preventDefault()
+        const elForm = ev.target
+        const inputVal = elForm.querySelector('input').value
+        mapService.getGeocode(inputVal)
+    })
 }
 
 function addEventListenrsTable() {

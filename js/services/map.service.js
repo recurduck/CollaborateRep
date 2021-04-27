@@ -10,7 +10,6 @@ export const mapService = {
 }
 
 
-var gMarkers = [];
 
 let currPos;
 
@@ -33,22 +32,19 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     lng: e.latLng.lng()
                 }
                 addMarker(loc)
-                    .then(res => {
-                        currPos = res
-                        gMarkers.push(res.map.center)
-                    })
             })
         })
 }
 
 function addMarker(loc) {
-    if(currPos) currPos.setMap(null)
+    if (currPos) currPos.setMap(null)
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
     });
+    currPos = marker
     panTo(loc.lat, loc.lng)
-    return Promise.resolve(marker) 
+    return Promise.resolve(marker)
 }
 
 function panTo(lat, lng) {
@@ -56,24 +52,22 @@ function panTo(lat, lng) {
     gMap.panTo(latLng);
 }
 
-function getMarkers(){
+function getMarkers() {
     return Promise.resolve(gMarkers)
 }
 
-function getGeocode(ev){
-    const address = ev.target.value
-    if(address){
+function getGeocode(address) {
+    console.log('address', address)
+    if (address) {
         const GEO_KEY = 'AIzaSyARh9KjQvI2E01yjvxzeozkaiNT3QflJFs'
         const prm = axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${GEO_KEY}`)
-        .then(res => {
-            console.log('res.data.geometry.location', res.data.results)
-            if(res.data.results){
-                const pos = res.data.results[0].geometry.location
-                console.log('pos', pos)
-                addMarker(pos)
-            }
-                // const pos = res.data.geometry.location
-                // addMarker(pos)
+            .then(res => {
+                console.log('res.data.geometry.location', res.data.results)
+                if (res.data.results) {
+                    const pos = res.data.results[0].geometry.location
+                    console.log('pos', pos)
+                    addMarker(pos)
+                }
             })
     }
 }
@@ -91,6 +85,3 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
-
-
-window.gMarkers = gMarkers
