@@ -39,9 +39,12 @@ table.table {
     overflow: auto;
   }
   table .btn-del {
-    background-color: rgb(255, 0, 0);
+    background: #f44242;
+    background: -moz-linear-gradient(top, #f77171 0%, #f55555 66%, #f44242 100%);
+    background: -webkit-linear-gradient(top, #f77171 0%, #f55555 66%, #f44242 100%);
+    background: linear-gradient(to bottom, #f77171 0%, #f55555 66%, #f44242 100%);
   }
   table button img {
-    width: 30px;
+    width: 15px;
     pointer-events: none;
   }
