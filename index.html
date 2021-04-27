@@ -9,7 +9,7 @@
 <body class="flex column">
     <header class="container flex align-center space-between">
         <h1>TravelTip</h1>
-        <nav class="nav-bar">
+        <nav class="nav-bar flex">
             <form class="search-form">
                 <input type="text" class="search-input" placeholder="Search Location...">
                 <button type="submit" class="btn-search-loc">Go</button>
@@ -18,15 +18,18 @@
         </nav>
     </header>
     
-    <p class="container">You are at: <span class="user-pos"></span></p><!--DOTO: Copy Location-->
-    
+    <div class="log-bar container flex space-between align-center">
+        <h2>Location: <span class="user-pos"></span></h2>
+        <button class="btn-copy-url">Copy To Clipboard</button>
+    </div>
+
     <section class="container map-container">
         <div id="map" style="width: 100%; height: 400px;"></div>
     </section>
     
     <section class="container controler-Duebug">
         <button class="btn-add-marker">Add Marker Speific Location</button>
-        <button class="btn-copy-url">Copy To Clipboard</button>
+        
     </section>
 
     <section class="container flex">
