@@ -40,6 +40,14 @@ function renderTableContent(res) {
     addEventListenrsTable();
 }
 
+function renderWeather(locData){
+    const strHtml = `<div class="curr-temp">Current temp: ${locData.temp}</div>
+                     <div class="feels-like">Feels like: ${locData.feelsLike}</div>
+                     <div class="max-temp">Max temp: ${locData.maxTemp}</div>
+                     <div class="min-temp">Min temp: ${locData.minTemp}</div>`
+    document.querySelector('.weather-container').innerHTML = strHtml
+}
+
 function addEventListenrs() {
     document.querySelector('.btn-user-pos').addEventListener('click', (ev) => {
         getPosition()
@@ -53,7 +61,7 @@ function addEventListenrs() {
     document.querySelector('.btn-add-marker').addEventListener('click', () => {
         mapService.getMarkers()
             .then(res => {
-                locService.saveCurrLoc(res[res.length - 1])
+                locService.saveCurrLoc(res)
             })
             .then(() => locService.getLocs())
             .then(res => renderTableContent(res))
@@ -70,6 +78,13 @@ function addEventListenrs() {
         const elForm = ev.target
         const inputVal = elForm.querySelector('input').value
         mapService.getGeocode(inputVal)
+        .then(res => {
+            // console.log('res', res)
+            return mapService.getWeather(res.lat, res.lng)
+        })
+        .then(res => {
+            renderWeather(res);
+        })
     })
 }
 

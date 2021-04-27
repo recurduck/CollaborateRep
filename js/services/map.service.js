@@ -6,10 +6,11 @@ export const mapService = {
     panTo,
     map: gMap,
     getMarkers,
-    getGeocode
+    getGeocode,
+    getWeather
 }
 
-
+let gMarkers = []
 
 let currPos;
 
@@ -31,6 +32,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     lat: e.latLng.lat(),
                     lng: e.latLng.lng()
                 }
+                gMarkers.push(loc)
                 addMarker(loc)
             })
         })
@@ -56,20 +58,41 @@ function getMarkers() {
     return Promise.resolve(gMarkers)
 }
 
+function getWeather(lat, lon) {
+    const API_KEY = 'f2b3cb7843280e2a382be6dd4bd011e4'
+    // const prm = axios.get(`api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`)
+    const prm = axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=matric`)
+        .then(res => {
+            return _convertToCelsius(res.data.main)
+        })
+        .then(res => {return res})
+    return prm
+}
+
 function getGeocode(address) {
-    console.log('address', address)
     if (address) {
         const GEO_KEY = 'AIzaSyARh9KjQvI2E01yjvxzeozkaiNT3QflJFs'
         const prm = axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${GEO_KEY}`)
             .then(res => {
-                console.log('res.data.geometry.location', res.data.results)
                 if (res.data.results) {
                     const pos = res.data.results[0].geometry.location
-                    console.log('pos', pos)
                     addMarker(pos)
+                    return pos
                 }
             })
+        return prm
     }
+}
+
+function _convertToCelsius(kelvin) {
+    const toSubtract = -273.17
+    const chelsiusData = {
+        temp: parseInt(kelvin.temp + toSubtract),
+        feelsLike: parseInt(kelvin.feels_like + toSubtract),
+        maxTemp: parseInt(kelvin.temp_max + toSubtract),
+        minTemp: parseInt(kelvin.temp_min + toSubtract)
+    }
+    return chelsiusData
 }
 
 function _connectGoogleApi() {

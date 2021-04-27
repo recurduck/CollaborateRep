@@ -12,10 +12,6 @@ const STORAGE_KEY = 'locsDB'
 
 let nextId = 3
 const locs = storageService.loadFromStorage(STORAGE_KEY) || []
-// const locs = [
-//     { id: 1, name: 'Loc1', lat: 32.047104, lng: 34.832384, createdAt: Date.now() },
-//     { id: 2, name: 'Loc2', lat: 32.047201, lng: 34.832581, createdAt: Date.now() }
-// ]
 function goLoc(locId) {
     let loc = locs.find(loc => loc.id === locId)
     return Promise.resolve({'lat': loc.lat, 'lng': loc.lng})
@@ -39,12 +35,11 @@ function getLocs() {
 function saveCurrLoc(loc) {
     getNewLocName()
         .then(res => {
-            console.log('res', res)
             const newLoc = {
                 id: utilsService.makeId(),
                 name: res,
-                lat: loc.lat(),
-                lng: loc.lng(),
+                lat: loc[loc.length - 1].lat,
+                lng: loc[loc.length - 1].lng,
                 createdAt: Date.now()
             }
             locs.push(newLoc)
