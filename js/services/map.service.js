@@ -45,7 +45,6 @@ function addMarker(loc) {
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
-        title: 'Hello World!'
     });
     panTo(loc.lat, loc.lng)
     return Promise.resolve(marker) 
