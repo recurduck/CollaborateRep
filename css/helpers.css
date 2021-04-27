@@ -1,0 +1,11 @@
+.container {
+    border: 1px solid gray ;
+}
+
+.details {
+    width: 50%;
+}
+
+.weather-container {
+    width: 50%;
+}

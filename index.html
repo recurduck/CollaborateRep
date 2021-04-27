@@ -3,18 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/main.css">
     <title>TravelTip</title>
 </head>
 <body>
-    <h1>TravelTip</h1>
-    <div id="map" style="width: 100%; height: 400px;"></div>
-    <button class="btn-add-marker">Add Marker Speific Location</button>
-    <button class="btn-user-pos">Get User Position</button>
-    <button class="btn-get-locs">Get Locations</button>
-    <button class="btn-pan">Pan Map to Tokyo</button>
-
-    <p>You are at: <span class="user-pos"></span></p>
-    <p>Locations: <span class="locs"></span></p>
+    <header class="container flex">
+        <h1>TravelTip</h1>
+        <input type="text" name="" id="">
+        <button class="btn-search-loc">Go</button>
+        <button class="btn-user-pos">Get User Position</button>
+    </header>
+    <p>You are at: <span class="user-pos"></span></p><!--DOTO: Copy Location-->
+    <section class="container map-container">
+        <div id="map" style="width: 100%; height: 400px;"></div>
+    </section>
+    <section class="container controler-Duebug">
+        <button class="btn-add-marker">Add Marker Speific Location</button>
+        <button class="btn-get-locs">Get Locations</button>
+        <button class="btn-pan">Pan Map to Tokyo</button>    
+        <p>Locations: <span class="locs"></span></p>
+    </section>
+    <section class="container details flex">
+        <div class="user-location">
+            <!-- render table -->table
+        </div>
+        <div class="weather-container">
+            <!-- TODO: render current location weather -->
+            <!-- render weather -->
+            weather
+        </div>
+    </section>
+    
+    
     
 
     <script type="module" src="js/app.controller.js"></script>
