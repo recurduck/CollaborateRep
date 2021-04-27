@@ -11,7 +11,16 @@ function onInit() {
         })
         .catch(() => console.log('Error: cannot init map'))
     locService.getLocs()
-        .then((res)=> renderTableContent(res))
+        .then((res) => renderTableContent(res))
+        .then(() => {
+            getPosition()
+                .then(pos => {
+                    mapService.addMarker({ lat: pos.coords.latitude, lng: pos.coords.longitude })
+                })
+                .catch(err => {
+                    console.log('err!!!', err);
+                })
+        })
         .catch(() => console.log('Error: cannot get locations'))
 }
 
@@ -44,10 +53,7 @@ function addEventListenrs() {
     document.querySelector('.btn-user-pos').addEventListener('click', (ev) => {
         getPosition()
             .then(pos => {
-                mapService.addMarker(pos)
-                // console.log('User position is:', pos.coords);
-                // document.querySelector('.user-pos').innerText =
-                //     `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+                mapService.addMarker({ lat: pos.coords.latitude, lng: pos.coords.longitude })
             })
             .catch(err => {
                 console.log('err!!!', err);

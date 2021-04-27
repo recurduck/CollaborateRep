@@ -24,7 +24,7 @@ function getLocs() {
 }
 
 function saveCurrLoc(loc) {
-    getNewLocName()
+     getNewLocName()
         .then(res => {
             console.log('res', res)
             const newLoc = {
@@ -35,7 +35,7 @@ function saveCurrLoc(loc) {
                 createdAt: Date.now()
             }
             locs.push(newLoc)
-            storageService.saveToStorage(STORAGE_KEY, locs)
+            storageService.saveToStorage(STORAGE_KEY, locs) 
         })
         .catch(err => {
             Swal.fire(
