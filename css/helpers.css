@@ -4,7 +4,8 @@
 .weather-container, .user-locations{
     width: 50%;
     height: 150px;
-    border: 1px solid green; 
+    border: 1px solid green;
+    overflow-y: auto; 
 }
 table .btn-del {
     background-color: rgb(255, 0, 0);
@@ -36,5 +37,12 @@ table.table {
     color: #FFFFFF;
   }
   table.table tfoot td {
-    font-size: 14px;
+    font-size: 0.875rem;
+  }
+  table.table tr:hover{
+    transition: .3s;
+    background-color: rgb(181, 228, 243);
+  }
+  table.table tbody {
+    overflow: auto;
   }

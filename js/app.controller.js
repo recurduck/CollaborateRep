@@ -9,7 +9,23 @@ function onInit() {
         .then(() => {
             console.log('Map is ready');
         })
-        .catch(() => console.log('Error: cannot init map'));
+        .catch(() => console.log('Error: cannot init map'))
+    locService.getLocs()
+        .then((res)=> renderTableContent(res))
+        .catch(() => console.log('Error: cannot get locations'))
+}
+
+function renderTableContent(res) {
+    let strHtml = res.map(location => {
+        return `<tr>
+            <td>${location.id}</td>
+            <td>${location.name}</td>
+            <td>${location.createdAt}</td>
+            <td><button class="btn-go" data-id="${location.id}"><img src="./img/icons/go.png" alt="go"></button></td>
+            <td><button class="btn-del"data-id="${location.id}"><img src="./img/icons/trash.svg" alt="Del"></button></td>        
+        </tr>
+        `});
+    document.querySelector('.table tbody').innerHTML = strHtml.join('');
 }
 
 function addEventListenrs() {
