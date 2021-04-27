@@ -22,10 +22,11 @@ function renderTableContent(res) {
             <td>${location.name}</td>
             <td>${location.createdAt}</td>
             <td><button class="btn-go" data-id="${location.id}"><img src="./img/icons/go.png" alt="go"></button></td>
-            <td><button class="btn-del"data-id="${location.id}"><img src="./img/icons/trash.svg" alt="Del"></button></td>        
+            <td><button class="btn-del" data-id="${location.id}"><img src="./img/icons/trash.svg" alt="Del"></button></td>        
         </tr>
         `});
     document.querySelector('.table tbody').innerHTML = strHtml.join('');
+    addEventListenrsTable();
 }
 
 function addEventListenrs() {
@@ -58,6 +59,8 @@ function addEventListenrs() {
             .then(res => {
                 locService.saveCurrLoc(res[res.length - 1])
             })
+            .then(() => locService.getLocs())
+            .then(res => renderTableContent(res))
             .catch(err => {
                 Swal.fire(
                     'We are sorry,',
@@ -65,10 +68,17 @@ function addEventListenrs() {
                     'error'
                 )
             })
+
     })
 }
 
-
+function addEventListenrsTable() {
+    document.querySelector('.table .btn-del').addEventListener('click', (ev) => {
+        locService.deleteLoc(ev.target.dataset.id)
+            .then(() => renderTableContent())
+            .catch((err) => Swal.fire('Connot Delete Location'))
+    })
+}
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
     console.log('Getting Pos');
