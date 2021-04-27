@@ -17,10 +17,6 @@ function addEventListenrs() {
         console.log('Panning the Map');
         mapService.panTo(35.6895, 139.6917);
     })
-    document.querySelector('.btn-add-marker').addEventListener('click', (ev) => {
-        console.log('Adding a marker');
-        mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
-    })
     document.querySelector('.btn-get-locs').addEventListener('click', (ev) => {
         locService.getLocs()
             .then(locs => {
@@ -38,6 +34,12 @@ function addEventListenrs() {
             })
             .catch(err => {
                 console.log('err!!!', err);
+            })
+    })
+    document.querySelector('.btn-add-marker').addEventListener('click', () => {
+        mapService.getMarkers()
+            .then(res => {
+                locService.saveCurrLoc(res[res.length-1])
             })
     })
 }

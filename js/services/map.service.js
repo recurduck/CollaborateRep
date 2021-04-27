@@ -3,8 +3,15 @@
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panTo,
+    map: gMap,
+    getMarkers
 }
+
+
+var gMarkers = [];
+
+let currPos;
 
 var gMap;
 
@@ -19,22 +26,40 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 zoom: 15
             })
             console.log('Map!', gMap);
+            gMap.addListener('click', (e) => {
+                const loc = {
+                    lat: e.latLng.lat(),
+                    lng: e.latLng.lng()
+                }
+                addMarker(loc)
+                    .then(res => {
+                        currPos = res
+                        gMarkers.push(res.map.center)
+                    })
+            })
         })
 }
 
 function addMarker(loc) {
+    if(currPos) currPos.setMap(null)
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
         title: 'Hello World!'
     });
-    return marker;
+    panTo(loc.lat, loc.lng)
+    return Promise.resolve(marker) 
 }
 
 function panTo(lat, lng) {
-    var laLatLng = new google.maps.LatLng(lat, lng);
-    gMap.panTo(laLatLng);
+    var latLng = new google.maps.LatLng(lat, lng);
+    gMap.panTo(latLng);
 }
+
+function getMarkers(){
+    return Promise.resolve(gMarkers)
+}
+
 
 
 
@@ -51,3 +76,6 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
+
+
+window.gMarkers = gMarkers
