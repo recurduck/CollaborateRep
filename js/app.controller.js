@@ -15,15 +15,19 @@ function onInit() {
     locService.getLocs()
         .then((res) => renderTableContent(res))
         .then(() => {
-            getPosition()
-                .then(pos => {
-                    mapService.addMarker({ lat: pos.coords.latitude, lng: pos.coords.longitude })
-                })
-                .catch(err => {
-                    console.log('err!!!', err);
-                })
+                getPosition()
+                    .then(pos => {
+                        mapService.addMarker({ lat: pos.coords.latitude, lng: pos.coords.longitude })
+                    })
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(err => {
+                        console.log('err!!!', err);
+                    })
         })
         .catch(() => console.log('Error: cannot get locations'))
+    
 }
 
 function renderTableContent(res) {
