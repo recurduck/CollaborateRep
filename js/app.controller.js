@@ -41,6 +41,7 @@ function addEventListenrs() {
             .then(res => {
                 locService.saveCurrLoc(res[res.length-1])
             })
+            .catch(err => console.log(err))
     })
 }
 
