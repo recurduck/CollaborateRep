@@ -15,6 +15,9 @@ h1 {
     font-size: 2rem;
     font-weight: bolder;
 }
+h2 {
+    font-size: 1.5rem;
+}
 
 button {
     cursor: pointer;
@@ -25,6 +28,7 @@ button {
     min-width: 55px;
     min-height: 40px;
     padding: 5px;
+    margin: 5px;
 }
 input[type='text'] {
     min-width: 55px;

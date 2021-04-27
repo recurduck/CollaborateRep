@@ -6,11 +6,11 @@ Nadav:
 Ilai:
 css
 
-rendering locations to table
+rendering locations to table // done
 
 together:
 
-9.
+9. //done
 
 10. last thing to do
 
