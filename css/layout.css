@@ -21,6 +21,6 @@
 }
 .container {
     margin: 0px 10px 10px;
-    border: 1px solid gray;
     padding: 10px;
+    background-color: white;
 }

@@ -7,15 +7,6 @@
     border: 1px solid green;
     overflow-y: auto; 
 }
-table .btn-del {
-    background-color: rgb(255, 0, 0);
-}
-table button img {
-    width: 30px;
-    pointer-events: none;
-}
-
-
 table.table {
     font-family: "Times New Roman", Times, serif;
     width: 100%;
@@ -46,4 +37,11 @@ table.table {
   }
   table.table tbody {
     overflow: auto;
+  }
+  table .btn-del {
+    background-color: rgb(255, 0, 0);
+  }
+  table button img {
+    width: 30px;
+    pointer-events: none;
   }

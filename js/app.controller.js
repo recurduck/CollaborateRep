@@ -41,18 +41,6 @@ function renderTableContent(res) {
 }
 
 function addEventListenrs() {
-    document.querySelector('.btn-pan').addEventListener('click', (ev) => {
-        console.log('Panning the Map');
-        mapService.panTo(35.6895, 139.6917);
-    })
-    document.querySelector('.btn-get-locs').addEventListener('click', (ev) => {
-        locService.getLocs()
-            .then(locs => {
-                console.log('Locations:', locs)
-                document.querySelector('.locs').innerText = JSON.stringify(locs)
-            })
-
-    })
     document.querySelector('.btn-user-pos').addEventListener('click', (ev) => {
         getPosition()
             .then(pos => {
@@ -80,6 +68,8 @@ function addEventListenrs() {
     document.querySelector('.search-input').addEventListener('input', 
         utilsService.debounce(mapService.getGeocode, 1000) 
     )
+    
+
 }
 
 function addEventListenrsTable() {
