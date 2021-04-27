@@ -1,11 +1,14 @@
-.container {
-    border: 1px solid gray ;
-}
-
 .details {
-    width: 50%;
+    width: 100%;
 }
-
-.weather-container {
+.weather-container, .user-locations{
     width: 50%;
+    height: 150px;
+    border: 1px solid green; 
+}
+table button {
+    background-color: rgb(255, 0, 0);
+}
+table button img {
+    width: 15px;
 }

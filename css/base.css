@@ -1,10 +1,42 @@
 * {
     box-sizing: border-box;
 }
+
 body {
-    background-color: burlywood;
-    font-size: 16px;
+    max-width: 1024px;
+    background-color: white;
+    font-size: 16px; 
+    height: 100vh;  
+    margin: 0 auto;
 }
+
 h1 {
     font-size: 2rem;
+    font-weight: bolder;
+}
+
+button {
+    cursor: pointer;
+    border-radius: 5px;
+    border: 0px;
+    color: white;
+    background-color: #4285f4;
+    min-width: 55px;
+    min-height: 40px;
+    padding: 5px;
+}
+button:hover {
+    opacity: 0.8;
+}
+
+table,tbody,thead,td {
+    border: 1px solid #4285f4;
+    border-collapse: collapse;
+    padding: 5px 10px;
+}
+table {
+    width: 100%;
+}
+tbody tr td:nth-child(n+3) {
+    text-align: center;
 }

@@ -1,4 +1,26 @@
 .flex {
     display: flex;
 }
-
+.justify-center {
+    justify-content: center;
+}
+.align-center {
+    align-items: center;
+}
+.wrap {
+    flex-wrap: wrap;
+}
+.space-between {
+    justify-content: space-between;
+}
+.row {
+    flex-direction: row;
+}
+.column {
+    flex-direction: column;
+}
+.container {
+    margin: 0px 10px 10px;
+    border: 1px solid gray;
+    padding: 10px;
+}
