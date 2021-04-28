@@ -1,5 +1,4 @@
 
-
 export const mapService = {
     initMap,
     addMarker,
@@ -14,11 +13,11 @@ export const mapService = {
 let gMarkers = []
 
 let currPos;
+let posToUrl;
 
 var gMap;
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-    console.log('InitMap');
     return _connectGoogleApi()
         .then(() => {
             console.log('google available');
@@ -34,7 +33,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     lng: e.latLng.lng()
                 }
                 gMarkers.push(loc)
-                addMarker(loc)
+                return addMarker(loc)
             })
         })
     }
@@ -45,9 +44,10 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             position: loc,
             map: gMap,
         });
-        currPos = {
-            lat:marker.position.lat(),
-            lng:marker.position.lng()
+        currPos = marker
+        posToUrl = {
+            lat:(marker.position.lat()) ? marker.position.lat() : loc.lat,
+            lng:(marker.position.lng()) ? marker.position.lng() : loc.lng
         }
         panTo(loc.lat, loc.lng)
     return Promise.resolve(marker)
@@ -65,7 +65,6 @@ function getMarkers() {
 
 function getWeather(lat, lon) {
     const API_KEY = 'f2b3cb7843280e2a382be6dd4bd011e4'
-    // const prm = axios.get(`api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`)
     const prm = axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=matric`)
         .then(res => {
             //res.data.weather //gives you an array with all sort of stuff
@@ -94,8 +93,9 @@ function getGeocode(address) {
 
 function copyUrl(){
     let linkToCopy = document.URL
-    linkToCopy += `?lan=${currPos.lat}&lng=${currPos.lng}`
     console.log('linkToCopy', linkToCopy)
+    linkToCopy += `?lat=${posToUrl.lat}&lng=${posToUrl.lng}`
+    console.log('posToUrl.lat', posToUrl.lat)
     const el = document.createElement('textarea');
     el.value = linkToCopy;
     el.setAttribute('readonly', linkToCopy);
