@@ -1,1 +1,7 @@
 /* Phone */
+
+@media screen and (max-width: 705px) {
+    body {
+        background-color: yellow;
+    }
+}
