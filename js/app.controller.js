@@ -15,19 +15,19 @@ function onInit() {
     locService.getLocs()
         .then((res) => renderTableContent(res))
         .then(() => {
-                getPosition()
-                    .then(pos => {
-                        mapService.addMarker({ lat: pos.coords.latitude, lng: pos.coords.longitude })
-                    })
-                    .then(res => {
-                        console.log(res);
-                    })
-                    .catch(err => {
-                        console.log('err!!!', err);
-                    })
+            getPosition()
+                .then(pos => {
+                    mapService.addMarker({ lat: pos.coords.latitude, lng: pos.coords.longitude })
+                })
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(err => {
+                    console.log('err!!!', err);
+                })
         })
         .catch(() => console.log('Error: cannot get locations'))
-    
+
 }
 
 function renderTableContent(res) {
@@ -36,15 +36,15 @@ function renderTableContent(res) {
             <td>${location.id}</td>
             <td>${location.name}</td>
             <td>${location.createdAt}</td>
-            <td><button class="btn-go" data-id="${location.id}"><img src="./img/icons/go.png" alt="go"></button></td>
-            <td><button class="btn-del" data-id="${location.id}"><img src="./img/icons/trash.svg" alt="Del"></button></td>        
+            <td><button class="btn-go" data-id="${location.id}">Go</button></td>
+            <td><button class="btn-del" data-id="${location.id}">Del</button></td>        
         </tr>
         `});
     document.querySelector('.table tbody').innerHTML = strHtml.join('');
     addEventListenrsTable();
 }
 
-function renderWeather(locData){
+function renderWeather(locData) {
     const strHtml = `<div class="curr-temp">Current temp: ${locData.temp}</div>
                      <div class="feels-like">Feels like: ${locData.feelsLike}</div>
                      <div class="max-temp">Max temp: ${locData.maxTemp}</div>
@@ -82,12 +82,12 @@ function addEventListenrs() {
         const elForm = ev.target
         const inputVal = elForm.querySelector('input').value
         mapService.getGeocode(inputVal)
-        .then(res => {
-            return mapService.getWeather(res.lat, res.lng)
-        })
-        .then(res => {
-            renderWeather(res);
-        })
+            .then(res => {
+                return mapService.getWeather(res.lat, res.lng)
+            })
+            .then(res => {
+                renderWeather(res);
+            })
     })
     document.querySelector('.btn-copy-url').addEventListener('click', (ev) => {
         mapService.copyUrl()
@@ -96,7 +96,7 @@ function addEventListenrs() {
                     'Success!',
                     'Link copied to clipboard',
                     'success'
-                  )
+                )
             })
     })
 }
@@ -112,7 +112,7 @@ function addEventListenrsTable() {
             .then(res => {
                 return mapService.addMarker(res)
             })
-            .then((res) =>{
+            .then((res) => {
                 const loc = {
                     lat: res.position.lat(),
                     lng: res.position.lng()
@@ -129,7 +129,7 @@ function addEventListenrsTable() {
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
-    console.log('Getting Pos');
+    console.log('Getting curr Pos');
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject)
     })
